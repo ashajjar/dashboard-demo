@@ -20,11 +20,8 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.util.filter.Not;
 import com.vaadin.demo.dashboard.data.DataProvider;
 import com.vaadin.demo.dashboard.data.TransactionsContainer;
-import com.vaadin.demo.dashboard.scrolling.ScrollingTable;
-import com.vaadin.demo.dashboard.scrolling.ScrollingTableScrollListener;
 import com.vaadin.event.Action;
 import com.vaadin.event.Action.Handler;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -49,11 +46,11 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class TransactionsView extends VerticalLayout implements View,ScrollingTableScrollListener {
+public class TransactionsView extends VerticalLayout implements View {
 
     private static final long serialVersionUID = 1L;
 
-    ScrollingTable t;
+    Table t;
 
     Object editableId = null;
 
@@ -66,7 +63,7 @@ public class TransactionsView extends VerticalLayout implements View,ScrollingTa
         setSizeFull();
         addStyleName("transactions");
 
-        t = new ScrollingTable() {
+        t = new Table() {
             @Override
             protected String formatPropertyValue(Object rowId, Object colId,
                     Property<?> property) {
@@ -87,7 +84,6 @@ public class TransactionsView extends VerticalLayout implements View,ScrollingTa
                 return super.formatPropertyValue(rowId, colId, property);
             }
         };
-        t.addScrollListener(this);
         t.setSizeFull();
         t.addStyleName("borderless");
         t.setSelectable(true);
@@ -360,11 +356,5 @@ public class TransactionsView extends VerticalLayout implements View,ScrollingTa
         t.setColumnFooter("Price", "$" + ret);
 
     }
-
-	@Override
-	public void doTableScroll() {
-		// TODO Auto-generated method stub
-		Notification.show("You are scrolling!\nYou can add your own behavior here!");
-	}
 
 }
