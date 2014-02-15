@@ -20,8 +20,11 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.filter.Not;
 import com.vaadin.demo.dashboard.data.DataProvider;
 import com.vaadin.demo.dashboard.data.TransactionsContainer;
+import com.vaadin.demo.dashboard.scrolling.ScrollingTable;
+import com.vaadin.demo.dashboard.scrolling.ScrollingTableScrollListener;
 import com.vaadin.event.Action;
 import com.vaadin.event.Action.Handler;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -46,11 +49,11 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class TransactionsView extends VerticalLayout implements View {
+public class TransactionsView extends VerticalLayout implements View,ScrollingTableScrollListener {
 
     private static final long serialVersionUID = 1L;
 
-    Table t;
+    ScrollingTable t;
 
     Object editableId = null;
 
@@ -63,7 +66,7 @@ public class TransactionsView extends VerticalLayout implements View {
         setSizeFull();
         addStyleName("transactions");
 
-        t = new Table() {
+        t = new ScrollingTable() {
             @Override
             protected String formatPropertyValue(Object rowId, Object colId,
                     Property<?> property) {
@@ -84,6 +87,7 @@ public class TransactionsView extends VerticalLayout implements View {
                 return super.formatPropertyValue(rowId, colId, property);
             }
         };
+        t.addScrollListener(this);
         t.setSizeFull();
         t.addStyleName("borderless");
         t.setSelectable(true);
@@ -356,5 +360,11 @@ public class TransactionsView extends VerticalLayout implements View {
         t.setColumnFooter("Price", "$" + ret);
 
     }
+
+	@Override
+	public void doTableScroll() {
+		// TODO Auto-generated method stub
+		Notification.show("You are scrolling!\nYou can add your own behavior here!");
+	}
 
 }
